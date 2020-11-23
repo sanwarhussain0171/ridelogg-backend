@@ -21,6 +21,9 @@ if (
 }
 app.use(express.json())
 
+app.get('/', (req, res) =>
+  res.status(200).send('You are now connected to Ridelogg!')
+)
 app.use('/api/signup', signup)
 app.use('/api/signin', signin)
 app.use('/api/refuellog', refuelLogs)
