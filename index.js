@@ -12,8 +12,13 @@ const app = express()
 const PORT = process.env.PORT
 const DB_URL = process.env.DB_URL
 
-app.use(compression())
-app.use(helmet())
+if (
+  process.env.NODE_ENV === 'production' ||
+  process.env.NODE_ENV === 'staging'
+) {
+  app.use(compression())
+  app.use(helmet())
+}
 app.use(express.json())
 
 app.use('/api/signup', signup)
