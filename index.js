@@ -40,7 +40,7 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    app.listen(PORT, () =>
+    module.exports = app.listen(PORT, () =>
       console.log(`Connected to mongodb. Server started on port ${PORT}`)
     )
   })
