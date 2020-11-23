@@ -9,8 +9,11 @@ const vehicle = require('./source/routes/vehicle')
 require('dotenv').config()
 
 const app = express()
-const PORT = process.env.PORT
-const DB_URL = process.env.DB_URL
+const PORT = process.env.PORT || 7000
+const DB_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.DB_URL
+    : process.env.TEST_DB_URL
 
 if (
   process.env.NODE_ENV === 'production' ||
@@ -34,6 +37,7 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
     useNewUrlParser: true,
+    useCreateIndex: true,
   })
   .then(() => {
     app.listen(PORT, () =>
