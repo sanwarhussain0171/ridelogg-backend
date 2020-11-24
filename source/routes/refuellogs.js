@@ -18,6 +18,7 @@ router.get('/', auth, async (req, res) => {
  * vehicleId needs to be supplied in the request body along with other fields
  */
 
+// creates a new refuel log
 router.post('/', auth, async (req, res) => {
   try {
     const { error } = validateRefuelLog(req.body)

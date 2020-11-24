@@ -4,8 +4,10 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
+// returns all the vehicles a user has
 router.get('/', auth, (req, res) => res.status(200).send(req.user.vehicle))
 
+// adds a new valid vehicle for the user
 router.post('/', auth, async (req, res) => {
   const { error } = validateVehicle(req.body)
   if (error) return res.status(400).send(error.details[0].message)

@@ -4,10 +4,12 @@ const bcrypt = require('bcrypt')
 
 const router = express.Router()
 
+// sending wrong request to end point
 router.get('/', (req, res) => {
-  return res.status(400).send('send post request')
+  return res.status(400).send('Endpoint accepts post request only')
 })
 
+// create new user
 router.post('/', async (req, res) => {
   console.log('in signup', req.body)
   const { error } = validateNewUser(req.body)
