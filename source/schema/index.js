@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: { type: String, unique: true },
+  phone: { type: String, default: null },
   avatar: String,
   createdAt: {
     type: Date,

@@ -19,9 +19,9 @@ router.post('/', async (req, res) => {
   if (user.length) return res.status(400).send('user already registered')
 
   try {
-    user = new User(req.body)
     const salt = await bcrypt.genSalt(10)
-    user.password = await bcrypt.hash(user.password, salt)
+    req.body.password = await bcrypt.hash(req.body.password, salt)
+    user = new User(req.body)
     await user.save()
   } catch (error) {
     return res.status(500).send(error.message)

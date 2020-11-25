@@ -14,8 +14,9 @@ router.post('/', auth, async (req, res) => {
 
   try {
     req.user.vehicle.push(req.body)
-    let newLog = await req.user.save()
-    return res.status(201).send(newLog)
+    await req.user.save()
+    // return the last added element
+    return res.status(201).send(req.user.vehicle[req.user.vehicle.length - 1])
   } catch (error) {
     return res.status(500).send(error.message)
   }
