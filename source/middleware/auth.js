@@ -15,7 +15,7 @@ async function auth(req, res, next) {
   try {
     let user = jwt.verify(token, process.env.JWTPRIVATEKEY) //try-catch if supplied token doesnt match
     user = await User.findOne({ _id: user.id })
-    if (!user) throw 'User not found'
+    if (!user) throw 'User not registered'
     req.user = user
     next()
   } catch (ex) {

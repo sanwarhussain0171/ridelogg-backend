@@ -7,18 +7,14 @@ const router = express.Router()
 
 router.get('/', auth, async (req, res) => {
   const index = getObjectIndex(req.user.vehicle, req.body.vehicleId)
+  if (index < 0) return res.status(400).send('Not found!')
   delete req.body.vehicleId
   const logs = req.user.vehicle[index].refuelLog
-
-  if (!logs.length) return res.status(404).send('No logs found')
+  if (!logs.length) return res.status(404).send('Not found!')
   return res.status(200).send(logs)
 })
 
-/**
- * vehicleId needs to be supplied in the request body along with other fields
- */
-
-// creates a new refuel log
+// creates a new refuel log and updates odo
 router.post('/', auth, async (req, res) => {
   try {
     const { error } = validateRefuelLog(req.body)
@@ -26,8 +22,17 @@ router.post('/', auth, async (req, res) => {
 
     const index = getObjectIndex(req.user.vehicle, req.body.vehicleId)
     delete req.body.vehicleId
+
+    console.log(req.body.odo, req.user.vehicle[index].odo)
+
+    if (req.body.odo < req.user.vehicle[index].odo)
+      return res.status(400).send('odo cannot be less than previous')
+
     req.user.vehicle[index].refuelLog.push(req.body)
-    await req.user.save()
+    req.user.save().then(async () => {
+      req.user.vehicle[index].odo = req.body.odo
+      await req.user.save()
+    })
     return res.status(201).send(req.body)
   } catch (error) {
     return res.status(500).send(error.message)
