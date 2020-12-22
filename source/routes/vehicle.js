@@ -33,6 +33,8 @@ function validateVehicle(vehicle) {
 		model: Joi.string().required(),
 		odo: Joi.string().required(),
 		plate: Joi.string().required(),
+		refuelLogs: Joi.array(),
+		serviceLogs: Joi.array(),
 		images: Joi.array().items({
 			_id: Joi.string().required(),
 			url: Joi.string(),
