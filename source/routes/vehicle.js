@@ -35,6 +35,8 @@ function validateVehicle(vehicle) {
 		plate: Joi.string().required(),
 		refuelLogs: Joi.array(),
 		serviceLogs: Joi.array(),
+		uploaded: Joi.string(),
+		modified: Joi.string(),
 		images: Joi.array().items({
 			_id: Joi.string().required(),
 			url: Joi.string(),
