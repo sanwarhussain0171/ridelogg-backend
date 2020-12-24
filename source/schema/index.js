@@ -26,9 +26,9 @@ const VehicleSchema = new mongoose.Schema({
 	model: { type: String, required: true },
 	odo: { type: String, required: true },
 	plate: { type: String, required: true },
-	image: [ImageSpec],
-	refuelLog: [refuelLogSchema],
-	serviceLog: [serviceLogSchema],
+	images: [ImageSpec],
+	refuelLogs: [refuelLogSchema],
+	serviceLogs: [serviceLogSchema],
 })
 
 const userSchema = new mongoose.Schema(
