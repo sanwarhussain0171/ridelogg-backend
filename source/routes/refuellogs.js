@@ -45,7 +45,7 @@ router.post('/', auth, async (req, res) => {
 
 function validateRefuelLog(log) {
 	const schema = Joi.object({
-		_id: Joi.string().require(),
+		_id: Joi.string().required(),
 		vehicleId: Joi.string().required(),
 		date: Joi.date().required(),
 		odo: Joi.string().required(),
