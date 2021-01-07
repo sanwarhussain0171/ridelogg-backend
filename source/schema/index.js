@@ -8,7 +8,7 @@ const ImageSpec = new mongoose.Schema({
 
 const refuelLogSchema = new mongoose.Schema({
 	_id: { type: mongoose.Types.ObjectId },
-	date: { type: Date, default: Date.now() },
+	date: { type: String, default: Date.now() },
 	odo: { type: String, required: true },
 	quantity: { type: String, required: true },
 	unitCost: { type: String, required: true },

@@ -24,11 +24,11 @@ router.post('/', auth, async (req, res) => {
 		delete req.body.vehicleId
 
 		console.log(req.body.odo, req.user.vehicle[index].odo)
-
-		if (req.body.odo < req.user.vehicle[index].odo)
+		if (parseInt(req.body.odo) < parseInt(req.user.vehicle[index].odo))
 			return res.status(400).send('odo cannot be less than previous')
 
-		req.user.vehicle[index].refuelLog.push(req.body)
+		console.log(req.user)
+		req.user.vehicle[index].refuelLogs.push(req.body)
 		req.user.save().then(async () => {
 			req.user.vehicle[index].odo = req.body.odo
 			await req.user.save()
@@ -47,13 +47,13 @@ function validateRefuelLog(log) {
 	const schema = Joi.object({
 		_id: Joi.string().required(),
 		vehicleId: Joi.string().required(),
-		date: Joi.date().required(),
+		date: Joi.string().required(),
 		odo: Joi.string().required(),
 		quantity: Joi.string().required(),
 		unitCost: Joi.string().required(),
 		totalCost: Joi.string().required(),
-		location: Joi.string().required(),
-		image: Joi.array(),
+		location: Joi.string(),
+		images: Joi.array(),
 	})
 	return schema.validate(log)
 }
