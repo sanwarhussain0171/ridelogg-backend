@@ -21,13 +21,11 @@ router.post('/', auth, async (req, res) => {
 		if (error) return res.status(400).send(error.details[0].message)
 
 		const index = getObjectIndex(req.user.vehicle, req.body.vehicleId)
-		delete req.body.vehicleId
 
 		console.log(req.body.odo, req.user.vehicle[index].odo)
 		if (parseInt(req.body.odo) < parseInt(req.user.vehicle[index].odo))
 			return res.status(400).send('odo cannot be less than previous')
 
-		console.log(req.user)
 		req.user.vehicle[index].refuelLogs.push(req.body)
 		req.user.save().then(async () => {
 			req.user.vehicle[index].odo = req.body.odo
