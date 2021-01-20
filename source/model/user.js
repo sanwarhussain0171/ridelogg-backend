@@ -13,17 +13,27 @@ const ImageSpec = new mongoose.Schema({
 
 const refuelLogSchema = new mongoose.Schema({
 	_id: { type: mongoose.Types.ObjectId, unique: true },
-	vehicleId: { type: mongoose.Types.ObjectId },
+	vehicleId: mongoose.Types.ObjectId,
 	date: { type: String, default: Date.now() },
 	odo: { type: String, required: true },
 	quantity: { type: String, required: true },
 	unitCost: { type: String, required: true },
 	totalCost: { type: String, required: true },
 	location: { type: String, required: true },
-	image: [ImageSpec],
+	images: [ImageSpec],
 })
 
-const serviceLogSchema = new mongoose.Schema({})
+const serviceLogSchema = new mongoose.Schema({
+	_id: { type: mongoose.Types.ObjectId, unique: true },
+	vehicleId: mongoose.Types.ObjectId,
+	date: { type: String, default: Date.now() },
+	odo: { type: String, required: true },
+	serviceCount: String,
+	notes: String,
+	totalCost: { type: String, required: true },
+	location: { type: String, required: true },
+	images: [ImageSpec],
+})
 
 const VehicleSchema = new mongoose.Schema({
 	vcallsign: { type: String, required: true },
