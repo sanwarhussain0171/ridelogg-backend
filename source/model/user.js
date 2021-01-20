@@ -50,7 +50,6 @@ const VehicleSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema(
 	{
-		_id: { type: mongoose.Types.ObjectId, unique: true },
 		callsign: {
 			type: String,
 			required: true,
