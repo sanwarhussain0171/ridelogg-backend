@@ -1,4 +1,9 @@
+const Joi = require('joi')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+
+const jwtAuthKey = process.env.JWTPRIVATEKEY
 
 const ImageSpec = new mongoose.Schema({
 	url: String,
@@ -7,7 +12,7 @@ const ImageSpec = new mongoose.Schema({
 })
 
 const refuelLogSchema = new mongoose.Schema({
-	_id: { type: mongoose.Types.ObjectId },
+	_id: { type: mongoose.Types.ObjectId, unique: true },
 	vehicleId: { type: mongoose.Types.ObjectId },
 	date: { type: String, default: Date.now() },
 	odo: { type: String, required: true },
@@ -35,6 +40,7 @@ const VehicleSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema(
 	{
+		_id: { type: mongoose.Types.ObjectId, unique: true },
 		callsign: {
 			type: String,
 			required: true,
@@ -56,5 +62,20 @@ const userSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 )
+userSchema.methods.generateAuthToken = function () {
+	return jwt.sign({ id: this._id }, jwtAuthKey)
+}
 
-module.exports = userSchema
+const validateNewUser = (user) => {
+	const schema = Joi.object({
+		_id: Joi.string().required(),
+		callsign: Joi.string().required().min(3).max(15),
+		email: Joi.string().required().email(),
+		password: Joi.string().required(),
+	})
+	return schema.validate(user)
+}
+
+const User = mongoose.model('user', userSchema)
+
+module.exports = { User, validateNewUser }
