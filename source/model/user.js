@@ -12,7 +12,7 @@ const ImageSpec = new mongoose.Schema({
 })
 
 const refuelLogSchema = new mongoose.Schema({
-	_id: { type: mongoose.Types.ObjectId, unique: true },
+	_id: mongoose.Types.ObjectId,
 	vehicleId: mongoose.Types.ObjectId,
 	date: { type: String, default: Date.now() },
 	odo: { type: String, required: true },
@@ -24,7 +24,7 @@ const refuelLogSchema = new mongoose.Schema({
 })
 
 const serviceLogSchema = new mongoose.Schema({
-	_id: { type: mongoose.Types.ObjectId, unique: true },
+	_id: mongoose.Types.ObjectId,
 	vehicleId: mongoose.Types.ObjectId,
 	date: { type: String, default: Date.now() },
 	odo: { type: String, required: true },

@@ -7,6 +7,8 @@ const signin = require('./source/routes/signIn')
 const refuelLogs = require('./source/routes/refuellogs')
 const vehicle = require('./source/routes/vehicle')
 const service = require('./source/routes/servicelogs')
+const updatePassword = require('./source/routes/updatePassword')
+
 require('dotenv').config()
 
 const app = express()
@@ -33,6 +35,7 @@ app.use('/api/signin', signin)
 app.use('/api/refuellog', refuelLogs)
 app.use('/api/vehicle', vehicle)
 app.use('/api/servicelog', service)
+app.use('/api/updatePassword', updatePassword)
 
 mongoose
 	.connect(DB_URL, {
