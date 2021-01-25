@@ -17,8 +17,8 @@ module.exports = {
 
 		const user = await User.findOne({ email: req.body.email })
 		if (!user) return res.status(404).send('User not found')
-
-		if (bcrypt.compare(req.body.password, user.password)) {
+		const validPassword = await bcrypt.compare(req.body.password, user.password)
+		if (validPassword) {
 			const token = user.generateAuthToken()
 			return res.send({
 				_id: user._id,
